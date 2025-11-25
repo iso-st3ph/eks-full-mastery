@@ -1,24 +1,26 @@
-# eks-full-mastery 🚀
-**Production-grade AWS EKS cluster built with Terraform + core Kubernetes addons + NLB + autoscaling demos**
+eks-full-mastery 🚀
 
-This repo demonstrates full, real-world EKS competency:
-- Terraform-provisioned EKS cluster (VPC + subnets + node groups + OIDC)
-- AWS Load Balancer Controller (ALB/NLB support)
-- Metrics Server
-- Cluster Autoscaler with IRSA
-- Nginx app exposed through an internet-facing **NLB with pod-IP targets**
-- End-to-end validation with healthy target groups and HTTP 200 responses
+Production-grade AWS EKS cluster built with Terraform + Kubernetes addons + NLB + autoscaling
 
----
+This repository demonstrates real-world, production-level EKS competency, including:
 
-## Architecture (high-level)
+Terraform-provisioned EKS cluster (VPC, subnets, node groups, OIDC)
 
-```mermaid
+AWS Load Balancer Controller (ALB/NLB integration)
+
+Metrics Server
+
+Cluster Autoscaler with IRSA + ASG auto-discovery
+
+NGINX application exposed through an internet-facing NLB with pod-IP targets
+
+Fully validated with healthy Target Groups and HTTP 200 OK responses
+
 flowchart TB
   user((User))
   dns[Public NLB DNS]
-  nlb[NLB - internet-facing]
-  tg[Target Group - IP targets: Pod IPs]
+  nlb[NLB - Internet Facing]
+  tg[Target Group - Pod IP Targets]
   subnets[Private Subnets]
   nodes[EKS Managed Node Group]
   pods[Nginx Pods]
@@ -27,38 +29,115 @@ flowchart TB
   user --> dns --> nlb --> tg --> pods
   pods --> nodes --> subnets
   eks --- nodes
+AWS EKS Project: Terraform + Load Balancers + Autoscaling
 
----
+This project provisions a fully automated, production-grade Amazon EKS environment using Infrastructure as Code and Kubernetes best practices.
 
-## AWS EKS Project: Terraform + Load Balancers + Autoscaling
+🔹 Terraform (Infrastructure as Code)
 
-This lab demonstrates a fully automated, production-grade EKS deployment using:
+Custom VPC with public/private subnets
 
-### 🔹 Terraform (Infrastructure as Code)
-- Custom VPC with public/private subnets
-- IAM Roles for Service Accounts (IRSA)
-- EKS cluster + managed node group
-- Automated OIDC + IAM integrations
+EKS cluster + managed node group
 
-### 🔹 Kubernetes Addons
-- **AWS Load Balancer Controller** (provisions internet-facing NLB/ALB)
-- **Metrics Server** for resource metrics
-- **Cluster Autoscaler** with IRSA + ASG auto-discovery
+IAM Roles for Service Accounts (IRSA)
 
-### 🔹 Application Deployment
-- NGINX deployment running on EKS
-- Exposed using `Service: LoadBalancer`
-- Controller provisions an **internet-facing NLB**
-- Pod IPs registered as **healthy targets** in the AWS Target Group
-- Verified with HTTP 200 responses via public NLB DNS
+Automatic OIDC provider creation
 
-### 🔹 Skills Demonstrated
-- Production EKS provisioning with Terraform
-- Kubernetes addon lifecycle management
-- Load balancer integration (ALB/NLB)
-- IAM security (IRSA)
-- Autoscaling (Cluster Autoscaler + ASGs)
-- Debugging ELB, target groups, health checks
-- End-to-end workload deployment and teardown
+Node group configured for Cluster Autoscaler tags
 
----
+Modular, reusable Terraform structure
+
+🔹 Kubernetes Addons
+AWS Load Balancer Controller
+
+Enables Kubernetes Services to create ALBs / NLBs
+
+Automatically provisions NLB for the NGINX Deployment
+
+Pod IPs registered into Target Groups
+
+Verified working with healthy targets
+
+Metrics Server
+
+Enables HPA + Autoscaler metrics
+
+Required for autoscaling functionality
+
+Cluster Autoscaler (with IRSA)
+
+Uses IAM permissions tied to the CA service account
+
+Auto-discovers ASGs created by Terraform
+
+Scales the EKS node group automatically
+
+Leader election + healthy logs validated
+
+🔹 Application Deployment
+
+NGINX Deployment with 2 replicas
+
+Exposed using a LoadBalancer Service
+
+AWS Load Balancer Controller creates an internet-facing NLB
+
+Target Group:
+
+Uses pod IP targets
+
+Shows healthy target states
+
+Allows public access through the NLB DNS name
+
+Example validation:
+curl -I http://<nlb-dns-name>
+HTTP/1.1 200 OK
+Server: nginx
+
+🔹 Skills Demonstrated
+
+Production-ready EKS provisioning using Terraform
+
+Kubernetes addon installation (Helm + kubectl)
+
+Load balancer integration (ALB/NLB)
+
+IRSA-based IAM security
+
+Autoscaling using Cluster Autoscaler + ASGs
+
+Debugging:
+
+ELB/NLB provisioning
+
+Target group health
+
+IRSA permissions
+
+Leader lock issues
+
+End-to-end deployment + teardown lifecycle
+
+eksctl delete cluster --name isovault-eks-lab --region us-east-1
+terraform destroy -auto-approve
+
+Verified:
+
+No EKS clusters
+
+No EC2 instances
+
+No ASGs
+
+No NLBs
+
+No residual AWS costs
+
+📚 Project Status
+
+✔️ Fully functional
+✔️ Tested end-to-end
+✔️ Validated via NLB + TargetGroups
+✔️ Real production-grade workflow
+✔️ Safe to reproduce anytime
