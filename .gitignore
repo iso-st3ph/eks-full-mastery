@@ -1,0 +1,12 @@
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+.terraform/
+.terraform.lock.hcl
+
+# Local archives and installers
+awscliv2.zip
+terraform_*.zip
+
+# OS/editor noise
+.DS_Store

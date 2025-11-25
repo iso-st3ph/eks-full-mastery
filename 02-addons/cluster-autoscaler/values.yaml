@@ -1,0 +1,15 @@
+autoDiscovery:
+  clusterName: isovault-eks-lab
+
+awsRegion: us-east-1
+
+rbac:
+  serviceAccount:
+    create: true
+    name: cluster-autoscaler
+    annotations:
+      eks.amazonaws.com/role-arn: REPLACE_WITH_ROLE_ARN
+
+extraArgs:
+  balance-similar-node-groups: "true"
+  skip-nodes-with-system-pods: "false"
