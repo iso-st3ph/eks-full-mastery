@@ -29,53 +29,45 @@ flowchart TB
   user --> dns --> nlb --> tg --> pods
   pods --> nodes --> subnets
   eks --- nodes
-AWS EKS Project: Terraform + Load Balancers + Autoscaling
+```
 
-This lab demonstrates a fully automated, production-grade EKS deployment using:
+---
 
-🔹 Terraform (Infrastructure as Code)
+## 🌩️ AWS EKS Project: Terraform + Load Balancers + Autoscaling
 
-Custom VPC with public/private subnets
+This lab demonstrates a fully automated, production-grade EKS deployment including:
 
-IAM Roles for Service Accounts (IRSA)
+### 🔹 Terraform (Infrastructure as Code)
+- Custom VPC with public & private subnets  
+- IAM Roles for Service Accounts (IRSA)  
+- EKS cluster + managed node groups  
+- Automated OIDC integration  
 
-EKS cluster + managed node group
+### 🔹 Kubernetes Addons
+- **AWS Load Balancer Controller**  
+- **Metrics Server**  
+- **Cluster Autoscaler** with ASG auto-discovery  
 
-Automated OIDC + IAM integration
+### 🔹 Application Deployment
+- NGINX deployment running on EKS  
+- Exposed using `Service: LoadBalancer`  
+- Automatically provisions an **internet-facing NLB**  
+- Pod IPs registered as **healthy IP targets**  
+- Verified via public NLB DNS (HTTP 200 OK)  
 
-🔹 Kubernetes Addons
+### 🔹 Skills Demonstrated
+- End-to-end EKS provisioning using Terraform  
+- Kubernetes addon lifecycle management  
+- AWS networking + ingress/egress architecture  
+- NLB/ALB integration via controller  
+- Autoscaling with ASG + Cluster Autoscaler  
+- Troubleshooting ELB/NLB, Target Groups & health checks  
+- Full build → validate → teardown workflow  
 
-AWS Load Balancer Controller
+---
 
-Metrics Server
+## 🎯 Summary
 
-Cluster Autoscaler with auto-discovered ASGs
-
-🔹 Application Deployment
-
-NGINX deployment on EKS
-
-Exposed using Service: LoadBalancer
-
-Controller provisions an internet-facing NLB
-
-Pod IPs registered as healthy targets
-
-Verified via public NLB DNS (HTTP 200)
-
-🔹 Skills Demonstrated
-
-End-to-end EKS provisioning using Terraform
-
-Kubernetes addon lifecycle management
-
-AWS NLB/ALB integration
-
-Autoscaling with ASG + Cluster Autoscaler
-
-Deep AWS troubleshooting: ELB, TGs, health checks
-
-Complete build → validate → teardown workflow
-This project provisions a fully automated, production-grade Amazon EKS environment using Infrastructure as Code and Kubernetes best practices.
+This project provisions a **fully automated, production-grade Amazon EKS environment** using Infrastructure as Code and Kubernetes best practices.
 
 ---
